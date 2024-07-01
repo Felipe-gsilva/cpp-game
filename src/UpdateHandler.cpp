@@ -1,4 +1,7 @@
-#include <iostream>
+#include "UpdateHandler.h"
 
+using namespace Update;
 
-void update(){}
+void UpdateHandler::update(){
+
+}

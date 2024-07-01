@@ -1,2 +1,7 @@
 #include "EventHandler.h"
-void HandlerEvents() {}
+
+using namespace Event;
+
+void EventHandler::handleEvents() {
+
+}
