@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-I/home/felipe-gsilva/.dev/cpp-game/inc",
+      "-isystem",
+      "/usr/include/SDL2",
+      "-std=gnu++11",
+      "-c",
+      "-o",
+      "CMakeFiles/cpp-game.dir/src/App.cpp.o",
+      "/home/felipe-gsilva/.dev/cpp-game/src/App.cpp"
+    ],
+    "directory": "/home/felipe-gsilva/.dev/cpp-game/build",
+    "file": "/home/felipe-gsilva/.dev/cpp-game/src/App.cpp",
+    "output": "/home/felipe-gsilva/.dev/cpp-game/build/CMakeFiles/cpp-game.dir/src/App.cpp.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-I/home/felipe-gsilva/.dev/cpp-game/inc",
+      "-isystem",
+      "/usr/include/SDL2",
+      "-std=gnu++11",
+      "-c",
+      "-o",
+      "CMakeFiles/cpp-game.dir/src/Main.cpp.o",
+      "/home/felipe-gsilva/.dev/cpp-game/src/Main.cpp"
+    ],
+    "directory": "/home/felipe-gsilva/.dev/cpp-game/build",
+    "file": "/home/felipe-gsilva/.dev/cpp-game/src/Main.cpp",
+    "output": "/home/felipe-gsilva/.dev/cpp-game/build/CMakeFiles/cpp-game.dir/src/Main.cpp.o"
+  }
+]
