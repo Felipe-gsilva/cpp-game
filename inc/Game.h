@@ -59,7 +59,6 @@ private:
   SDL_Rect destRect;
 
   u16 currentFrame;
-  Texture::TextureHandler textureManager;
 
   SDL_Event event;
   const WindowSettings windowSettings;
