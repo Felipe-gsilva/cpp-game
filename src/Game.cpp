@@ -1,33 +1,29 @@
 #include "Game.h"
-#include <memory>
 
 using namespace Application;
 
 
 bool Game::init(){
-  if(SDL_Init (SDL_INIT_EVERYTHING) >= 0) {
+  try {
+    if (SDL_Init (SDL_INIT_EVERYTHING) < 0)  {
+      std::cerr << "error while initializing SDL" << std::endl;
+    }
+
     window = SDL_CreateWindow(windowSettings.projectName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowSettings.width, windowSettings.height, windowSettings.flags);
 
-    if (window != 0) {
-      renderer = SDL_CreateRenderer(window, -1, 0);
-      if(renderer != 0) {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        surface = SDL_LoadBMP("assets/dots.bmp");
+    if (window == 0) 
+      std::cerr << "error while creating renderer" << std::endl;
 
-        texture = SDL_CreateTextureFromSurface(renderer,surface);
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    if(renderer == 0) 
+      std::cerr << "error while creating window" << std::endl;
 
-        SDL_FreeSurface(surface);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+   
+    textureManager.load("assets/sPlayerAttack.png", "animate", renderer);
 
-        SDL_QueryTexture(texture, nullptr, nullptr, &srcRect.w, &srcRect.h);
-
-        destRect.w = 200;
-        destRect.h = 200;
-        destRect.x = windowSettings.width * 0.5f - (destRect.w * 0.5f);
-        destRect.y = windowSettings.height * 0.5f - (destRect.h * 0.5f);
-
-      }
-    }
-  } else {
+  } catch (std::exception ) {
+    std::cout << "error" << std::endl;
     return false;
   }
   return true;
@@ -35,8 +31,11 @@ bool Game::init(){
 
 void Game::render() {
   SDL_RenderClear(renderer);
-  SDL_RenderCopy(renderer, texture, &srcRect, &destRect);
-  //SDL_RenderCopy(renderer, texture, 0, 0);
+
+  textureManager.draw("animate", 0, 0, 32, 32, renderer);
+
+  textureManager.drawFrame("animate", 100, 100, 32, 32, 1, currentFrame, renderer);
+
   SDL_RenderPresent(renderer);
 }
 
@@ -60,14 +59,15 @@ void Game::handleEvents() {
       case SDL_QUIT:
         setRunnable(false);
         break;
-
       defaut:
         break;
     }
   }
 }
 
-void Game::update() {}
+void Game::update() {
+  currentFrame = SprDefaultSize * int(((SDL_GetTicks() / 100) % 6));
+}
 
 int main() {
   std::unique_ptr<Game> game = std::make_unique<Game>();
