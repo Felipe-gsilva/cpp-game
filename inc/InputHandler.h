@@ -1,11 +1,11 @@
 #pragma once
 
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_keyboard.h>
 
 namespace Event {
-class EventHandler {
+class InputHandler{
 private:
-  SDL_Event event;
 
 
 };
