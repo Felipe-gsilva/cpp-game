@@ -1,6 +1,9 @@
 #include "Game.h"
 #include "TextureHandler.h"
 
+#include "Player.h"
+#include "Enemy.h"
+
 #include <iostream>
 #include <memory>
 
@@ -27,8 +30,14 @@ bool Game::init() {
     if(!TextureHandler::Instance()->load("assets/sPlayerAttack.png", "animate", renderer))
       throw new std::exception();
 
-    gameObj.load(100, 100, 32, 32, "animate");
-    player.load(200, 200, 32, 32, "animate");
+    player = new Player();
+    player->load(windowSettings.width * 0.5f- (SprDefaultSize * 0.5f), windowSettings.height* 0.5f - (SprDefaultSize * 0.5f), SprDefaultSize, SprDefaultSize, "animate");
+
+    enemy1 = new Enemy();
+    enemy1->load(200, 200, 32, 32, "animate");
+
+    gameObjects.push_back(player);
+    gameObjects.push_back(enemy1);
 
   } catch (std::exception ) {
     std::cout << "error" << std::endl;
@@ -40,12 +49,9 @@ bool Game::init() {
 void Game::render() {
   SDL_RenderClear(renderer);
 
-//  TextureHandler::Instance()->draw("animate", 0, 0, 32 * 2, 32 * 2, renderer) ;
-
-// TextureHandler::Instance()->drawFrame("animate", windowSettings.width * 0.5f, windowSettings.height * 0.5f, 32, 32, 1, currentFrame, renderer);
-  gameObj.draw(renderer);
-
-  player.draw(renderer);
+  for(std::vector<GameObject*>::size_type i = 0; i < gameObjects.size(); i++){
+    gameObjects[i]->draw(renderer);
+  } 
 
   SDL_RenderPresent(renderer);
 }
@@ -55,6 +61,9 @@ bool Game::running() {
 }
 
 void Game::clean() {
+  for(std::vector<GameObject*>::size_type i = 0; i !=gameObjects.size(); i++){
+
+  } 
   SDL_DestroyWindow(window);
   SDL_DestroyRenderer(renderer);
   SDL_Quit();
@@ -78,8 +87,11 @@ void Game::handleEvents() {
 
 void Game::update() {
   //  currentFrame =  int(((SDL_GetTicks() / 100) % 6));
-  player.update();
-  gameObj.update();
+  //
+
+  for(std::vector<GameObject*>::size_type i = 0; i !=gameObjects.size(); i++){
+    gameObjects[i]->update();
+  } 
 }
 
 int main() {

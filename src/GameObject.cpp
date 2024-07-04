@@ -20,7 +20,4 @@ void GameObject::draw(SDL_Renderer *renderer) {
 }
 
 void GameObject::update() {
-  x = (x + 10) % 640;
-  
-  currentFrame = int(((SDL_GetTicks() / 100) % 6));
 }
