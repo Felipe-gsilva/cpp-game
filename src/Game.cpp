@@ -14,6 +14,7 @@ Game* Game::instance = 0;
 void Game::loadScene() {
   gameObjects.push_back(new Player(new LoaderParams(100, 100, 32, 32, "animate")));
   gameObjects.push_back(new Enemy(new LoaderParams(200, 200, 32, 32, "animate")));
+  gameObjects.push_back(new AmbienceObject(new LoaderParams(50, 50, 32, 32, "fire")));
 }
 bool Game::init() {
   try {
@@ -33,6 +34,9 @@ bool Game::init() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     if(!TextureHandler::Instance()->load("assets/sPlayerAttack.png", "animate", renderer))
+      throw new std::exception();
+
+    if(!TextureHandler::Instance()->load("assets/fire.png", "fire", renderer))
       throw new std::exception();
 
     loadScene();

@@ -3,6 +3,7 @@
 #include "util/Defines.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "AmbienceObject.h"
 
 
 #include <vector>
