@@ -13,10 +13,12 @@ public:
   virtual void update();
   virtual void clean();
 
-  GameObject(const LoaderParams* params);
 protected:
+  GameObject(const LoaderParams* params);
 
   Vector2D coord;
+  Vector2D velocity;
+  Vector2D acceleration;
   int width;
   int height;
   int currentRow;

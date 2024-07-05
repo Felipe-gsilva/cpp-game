@@ -10,9 +10,10 @@ void AmbienceObject::draw() {
 }
 
 void AmbienceObject::update() {
-  coord.setX(coord.getX() + 1);
-  currentFrame = 1; 
+  velocity.setY(1);
+  GameObject::update();
 }
 
 void AmbienceObject::clean() {
+  GameObject::clean();
 }

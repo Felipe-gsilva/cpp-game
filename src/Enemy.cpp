@@ -13,4 +13,5 @@ void Enemy::update() {
 }
 
 void Enemy::clean() {
+  GameObject::clean();
 }
