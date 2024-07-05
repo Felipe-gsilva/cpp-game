@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "util/TextureHandler.h"
+#include "util/InputHandler.h"
 
 
 #include <iostream>
@@ -85,16 +86,9 @@ void Game::clean() {
 void Game::setRunnable(bool runnable) {
   Running = runnable;
 }
+
 void Game::handleEvents() {
-  if(SDL_PollEvent(&event)) {
-    switch(event.type) {
-      case SDL_QUIT:
-        setRunnable(false);
-        break;
-      defaut:
-        break;
-    }
-  }
+  Event::InputHandler::Instance()->update(); 
 }
 
 void Game::update() {
@@ -119,7 +113,6 @@ int main() {
 
 
     frameTime = SDL_GetTicks() - frameStart;
-
     if(frameTime < Game::Instance()->windowSettings.frameTargetTime) {
       SDL_Delay((int)(Game::Instance()->windowSettings.frameTargetTime - frameTime));
     }
