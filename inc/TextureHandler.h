@@ -2,10 +2,9 @@
 
 #include <string>
 #include <map>
+#include <iostream>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_image.h>
-
-
 
 namespace Texture {
 class TextureHandler {
@@ -32,5 +31,6 @@ public:
 
   void drawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+  void loadTextures(SDL_Renderer* renderer);
 };
 }

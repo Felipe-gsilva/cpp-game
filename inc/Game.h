@@ -1,11 +1,18 @@
 #pragma once
 
-#include "util/Defines.h"
+#include "Defines.h"
+#include "GameObject.h"
+#include "TextureHandler.h"
+#include "InputHandler.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "AmbienceObject.h"
+#include "Crosshair.h"
+#include "GameStateMachine.h"
+#include "MenuState.h"
+#include "PlayState.h"
 
-
+#include <iostream>
 #include <vector>
 
 #include <SDL2/SDL.h>
@@ -14,6 +21,7 @@
 #include <SDL2/SDL_render.h>
 
 using namespace Object;
+using namespace States;
 
 namespace Application {
 class Game{
@@ -29,9 +37,7 @@ public:
   void setRunnable(bool runnable);
   void handleEvents(); 
   void loadScene();
-private:
 
-public:
   bool Running = false;
 
   struct WindowSettings {
@@ -43,7 +49,7 @@ public:
     u16 frameTargetTime = (1000/fps);
   };
 
-  const WindowSettings windowSettings;
+  const WindowSettings ws;
 
   static Game* Instance () {
     if (instance == 0) {
@@ -57,6 +63,13 @@ public:
 private:
   Game() {}
   
+  enum gameStates
+  {
+    MENU = 0,
+    PLAY = 1,
+    GAMEOVER = 2
+  };
+
   SDL_Window *window;
   SDL_Renderer *renderer;
   SDL_Texture *texture;
@@ -64,10 +77,12 @@ private:
   SDL_Rect srcRect;
   SDL_Rect destRect;
 
-  u16 currentFrame;
-
-  std::vector<GameObject*> gameObjects;
-
+  std::vector<GameObject*> phaseObjects;
+  GameStateMachine* gsm;
+  
   static Game* instance;
+
+  u16 currentFrame;
+  u8 currentState = MENU;
 };
 }
