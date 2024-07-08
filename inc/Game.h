@@ -4,10 +4,7 @@
 #include "GameObject.h"
 #include "TextureHandler.h"
 #include "InputHandler.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "AmbienceObject.h"
-#include "Crosshair.h"
+
 #include "GameStateMachine.h"
 #include "MenuState.h"
 #include "PlayState.h"
@@ -20,8 +17,6 @@
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_render.h>
 
-using namespace Object;
-using namespace States;
 
 namespace Application {
 class Game{
@@ -59,6 +54,7 @@ public:
   }
 
   SDL_Renderer* getRenderer() const { return renderer; }
+  SDL_Window* getWindow() const { return window; }
 
 private:
   Game() {}
@@ -78,7 +74,9 @@ private:
   SDL_Rect destRect;
 
   std::vector<GameObject*> phaseObjects;
-  GameStateMachine* gsm;
+  States::GameStateMachine* gsm;
+  States::MenuState *menu;
+  States::PlayState *play;
   
   static Game* instance;
 

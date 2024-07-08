@@ -63,3 +63,9 @@ void TextureHandler::loadTextures(SDL_Renderer* renderer) {
   }
 
 }
+
+void TextureHandler::clearFromTextureMap(std::string textureId) {
+  SDL_Texture* texture = textureMap[textureId];
+  SDL_DestroyTexture(texture);
+  textureMap[textureId] = nullptr;
+}

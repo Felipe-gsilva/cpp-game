@@ -1,14 +1,24 @@
+#pragma once
+
+#include "AmbienceObject.h"
+#include "Crosshair.h"
+#include "Enemy.h"
 #include "GameStates.h"
+#include "Player.h"
 
 namespace States {
 class PlayState : public GameStates {
 public:
-  virtual void update();
-  virtual void render();
-  virtual bool onEnter();
-  virtual bool onExit();
-  virtual std::string getStateID() const { return playId; }
+  PlayState() {}
+  virtual ~PlayState() {}
+
+  void update() override;
+  void render() override;
+  bool onEnter() override;
+  bool onExit() override;
+  std::string getStateId() const override { return playId; }
 private:
   static const std::string playId;
+  std::vector<Object::GameObject*> gameObjects;
 };
 }
