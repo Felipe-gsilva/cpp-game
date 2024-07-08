@@ -3,7 +3,6 @@
 #include "Defines.h"
 #include "GameStates.h"
 
-
 namespace States {
 class MenuState : public GameStates {
 public:

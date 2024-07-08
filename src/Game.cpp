@@ -57,10 +57,6 @@ bool Game::running() const {
 }
 
 void Game::clean() {
-  for (auto& gameObject : phaseObjects) {
-    delete gameObject;
-  }
-
   gsm->popState(menu);
   gsm->popState(play);
 
