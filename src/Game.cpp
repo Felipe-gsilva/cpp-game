@@ -5,17 +5,18 @@ using namespace Texture;
 using namespace States;
 
 Game* Game::instance = nullptr;
+States::MenuState *menu;
 
 bool Game::init() {
   try {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
       throw new std::runtime_error("Error initializing SDL");
-    
+
 
     window = SDL_CreateWindow(ws.projectName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ws.width, ws.height, ws.flags);
     if (window == nullptr) 
       throw new std::runtime_error("Error creating window");
-    
+
 
     renderer = SDL_CreateRenderer(window, -1, 0);
     if (renderer == nullptr) 
@@ -24,17 +25,18 @@ bool Game::init() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     TextureHandler::Instance()->loadTextures(renderer);
-    
+
     gsm = new GameStateMachine();
 
     menu = new MenuState();
     gsm->pushState(menu);
 
-    play = new PlayState();
-    gsm->pushState(play); 
-
     gsm->changeState(menu);
     std::cout << "menu";
+
+    PlayState *play = new PlayState();
+    gsm->pushState(play);
+    gsm->changeState(play);
 
   } catch (const std::exception& e) {
     std::cerr << "Exception: " << e.what() << std::endl;
@@ -58,9 +60,7 @@ bool Game::running() const {
 
 void Game::clean() {
   gsm->popState(menu);
-  gsm->popState(play);
 
-  delete play;
   delete menu;
   delete gsm;
   SDL_DestroyWindow(window);
@@ -75,9 +75,6 @@ void Game::setRunnable(bool runnable) {
 
 void Game::handleEvents() {
   Event::InputHandler::Instance()->update(); 
-
-  if(Event::InputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN))
-     gsm->changeState(new PlayState());
 }
 
 void Game::update() {
@@ -101,7 +98,7 @@ int main() {
     std::string title;
     title = std::to_string(frameTime);
     SDL_SetWindowTitle(Game::Instance()->getWindow(), title.c_str());
-      
+
     if(frameTime < Game::Instance()->ws.frameTargetTime) {
       SDL_Delay((int)(Game::Instance()->ws.frameTargetTime - frameTime));
     }

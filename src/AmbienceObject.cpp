@@ -6,7 +6,7 @@
 AmbienceObject::AmbienceObject(const LoaderParams* params) : GameObject(params) { }
 
 void AmbienceObject::draw() {
-  Texture::TextureHandler::Instance()->draw(textureId, coord.getX(), coord.getY(), width, height, Application::Game::Instance()->getRenderer());
+  Texture::TextureHandler::Instance()->draw(textureId, rect.getPos().getX(), rect.getPos().getY(), rect.getWidth(), rect.getHeight(), Application::Game::Instance()->getRenderer());
 }
 
 void AmbienceObject::update() {

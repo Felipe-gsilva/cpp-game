@@ -6,8 +6,8 @@
 #include "InputHandler.h"
 
 #include "GameStateMachine.h"
-#include "MenuState.h"
-#include "PlayState.h"
+#include "States/MenuState.h"
+#include "States/PlayState.h"
 
 #include <iostream>
 #include <vector>
@@ -55,6 +55,7 @@ public:
 
   SDL_Renderer* getRenderer() const { return renderer; }
   SDL_Window* getWindow() const { return window; }
+  States::GameStateMachine *getGameStateMachine() const {return gsm;}
 
 private:
   Game() {}
@@ -74,8 +75,6 @@ private:
   SDL_Rect destRect;
 
   States::GameStateMachine* gsm;
-  States::MenuState *menu;
-  States::PlayState *play;
   
   static Game* instance;
 

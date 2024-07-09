@@ -25,6 +25,7 @@ void GameStateMachine::changeState(GameStates *state) {
     {
       return; 
     }
+
     if(gameStates.back()->onExit())
     {
       delete gameStates.back();
@@ -45,5 +46,3 @@ void GameStateMachine::popState(GameStates *state) {
     }
   }
 }
-
-
