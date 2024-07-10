@@ -19,28 +19,24 @@ void GameStateMachine::pushState(GameStates *state) {
 }
 
 void GameStateMachine::changeState(GameStates *state) {
-  if(!gameStates.empty())
-  {
+  if(!gameStates.empty()) {
     if(gameStates.back()->getStateId() == state->getStateId())
-    {
       return; 
-    }
+    
 
-    if(gameStates.back()->onExit())
-    {
+    if(gameStates.back()->onExit()) {
       delete gameStates.back();
       gameStates.pop_back();
     }
+
     gameStates.push_back(state);
     gameStates.back()->onEnter();
   }
 }
 
 void GameStateMachine::popState(GameStates *state) {
-  if(!gameStates.empty())
-  {
-    if(gameStates.back()->onExit())
-    {
+  if(!gameStates.empty()) {
+    if(gameStates.back()->onExit()) {
       delete gameStates.back();
       gameStates.pop_back();
     }

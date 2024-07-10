@@ -1,6 +1,6 @@
 #pragma once
 #include "Defines.h"
-#include "GameStates.h"
+#include "States/GameStates.h"
 
 #include <vector>
 

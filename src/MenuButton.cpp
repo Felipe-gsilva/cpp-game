@@ -6,7 +6,6 @@ using namespace Object;
 using namespace Event;
 using namespace States;
 
-
 MenuButton::MenuButton(const LoaderParams* params, void (*callback)()) : GameObject(params), callback (*callback) {
   currentFrame = MOUSE_OUT;
 }
@@ -17,6 +16,7 @@ void MenuButton::draw() {
 
 void MenuButton::update() {
   Vector2D* mousePos = InputHandler::Instance()->getMousePosition();
+
   if(mousePos->getX() < (rect.getPos().getX() + rect.getWidth()) && mousePos->getX() > rect.getPos().getX() && mousePos->getY() < (rect.getPos().getY() + rect.getHeight()) && mousePos->getY() > rect.getPos().getY()) {
     currentFrame = MOUSE_OVER;
     if(InputHandler::Instance()->getMouseState(InputHandler::LEFT) && released) {
@@ -42,7 +42,7 @@ void MenuButton::clean() {
 }
 
 void MenuButton::menuToPlay() {
-  Application::Game::Instance()->getGameStateMachine()->changeState(new PlayState());
+  Application::Game::Instance()->getGameStateMachine()->changeState(Application::Game::Instance()->getPlayState());
 }
 void MenuButton::exitFromMenu() {
   Application::Game::Instance()->clean();

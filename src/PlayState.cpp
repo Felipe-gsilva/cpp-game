@@ -11,7 +11,7 @@ void PlayState::update()
   for(auto& gameObject : gameObjects) {
     for(auto& test: gameObjects) {
       if(gameObject->isColliding(test)) {
-        std::cout << "carlinhos";
+        //do something
       }
     }
     gameObject->update(); 
@@ -26,8 +26,6 @@ void PlayState::render()
 
 bool PlayState::onEnter()
 {
-
-  SDL_RenderSetScale(Game::Instance()->getRenderer(), 1, 1);
   gameObjects.push_back(new Player(new LoaderParams(Game::Instance()->ws.width/2 - (SprDefaultSize/2),Game::Instance()->ws.height/2 - (SprDefaultSize/2), SprDefaultSize, SprDefaultSize, "animate")));
 
   gameObjects.push_back(new Enemy(new LoaderParams(Game::Instance()->ws.width * 0.2f, Game::Instance()->ws.height * 0.2f, SprDefaultSize, SprDefaultSize, "animate")));

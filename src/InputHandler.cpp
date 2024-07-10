@@ -16,7 +16,6 @@ void InputHandler::onMouseButtonDown(SDL_Event& event) {
   switch (event.button.button) {
     case SDL_BUTTON_LEFT:
       mouseButtonState[LEFT] = true;
-      std::cout << "mouse left";
       break;
     case SDL_BUTTON_MIDDLE:
       mouseButtonState[MIDDLE] = true;
