@@ -10,8 +10,10 @@ void AmbienceObject::draw() {
 }
 
 void AmbienceObject::update() {
-  u8 i = 1;
-  acceleration.setY(i++);
+  if(rect.getPos().getY() != 1280)
+    acceleration.setY(-1.2f);
+  else
+    rect.getPos().setY(0);
   GameObject::update();
 }
 
