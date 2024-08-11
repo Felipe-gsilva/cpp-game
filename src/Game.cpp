@@ -33,7 +33,7 @@ bool Game::init() {
     play = new PlayState();
     gsm->pushState(play);
 
-    gsm->changeState(menu);
+    gsm->changeState(play);
     std::cout << "menu";
 
 

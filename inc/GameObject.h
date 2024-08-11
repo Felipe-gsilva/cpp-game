@@ -39,6 +39,8 @@ protected:
   Rectangle2D rect;
   Vector2D direction;
 
+  float life; //TODO 
+
   int currentRow;
   int currentFrame;
 

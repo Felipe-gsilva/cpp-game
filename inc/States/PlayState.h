@@ -17,6 +17,8 @@ public:
   bool onEnter() override;
   bool onExit() override;
   std::string getStateId() const override { return playId; }
+  Player *player;
+
 private:
   static const std::string playId;
   std::vector<Object::GameObject*> gameObjects;
