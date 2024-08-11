@@ -1,7 +1,7 @@
 #include "AmbienceObject.h"
 #include <SDL2/SDL.h>
 #include "Game.h"
-#include "util/TextureHandler.h"
+#include "TextureHandler.h"
 
 AmbienceObject::AmbienceObject(const LoaderParams* params) : GameObject(params) { }
 
@@ -10,7 +10,8 @@ void AmbienceObject::draw() {
 }
 
 void AmbienceObject::update() {
-  velocity.setY(1);
+  u8 i = 1;
+  acceleration.setY(i++);
   GameObject::update();
 }
 

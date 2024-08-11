@@ -1,4 +1,4 @@
-#include "util/TextureHandler.h"
+#include "TextureHandler.h"
 
 using namespace Texture;
 
@@ -47,4 +47,19 @@ void TextureHandler::drawFrame(std::string id, int x, int y, int width, int heig
   destRect.x = x;
   destRect.y = y;
   SDL_RenderCopyEx(renderer, textureMap[id], &srcRect, &destRect, 0, 0, flip);
+}
+
+void TextureHandler::loadTextures(SDL_Renderer* renderer) {
+  if (!TextureHandler::Instance()->load("assets/sPlayerAttack.png", "animate", renderer)) {
+    throw std::runtime_error("Error loading texture");
+  }
+
+  if (!TextureHandler::Instance()->load("assets/fire.png", "fire", renderer)) {
+    throw std::runtime_error("Error loading texture");
+  }
+
+  if (!TextureHandler::Instance()->load("assets/crosshair.png", "crosshair", renderer)) {
+    throw std::runtime_error("Error loading texture");
+  }
+
 }

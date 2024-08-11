@@ -1,10 +1,4 @@
 #include "Game.h"
-#include "util/TextureHandler.h"
-#include "util/InputHandler.h"
-
-
-#include <iostream>
-#include <memory>
 
 using namespace Application;
 using namespace Texture;
@@ -13,9 +7,13 @@ using namespace Texture;
 Game* Game::instance = nullptr;
 
 void Game::loadScene() {
-  gameObjects.push_back(new Player(new LoaderParams(100, 100, 32, 32, "animate")));
-  gameObjects.push_back(new Enemy(new LoaderParams(200, 200, 32, 32, "animate")));
-  gameObjects.push_back(new AmbienceObject(new LoaderParams(50, 50, 32, 32, "fire")));
+  phaseObjects.push_back(new Player(new LoaderParams(ws.width/2 - (SprDefaultSize/2), ws.height/2 - (SprDefaultSize/2), SprDefaultSize, SprDefaultSize, "animate")));
+
+  phaseObjects.push_back(new Enemy(new LoaderParams(ws.width * 0.2f, ws.height * 0.2f, SprDefaultSize, SprDefaultSize, "animate")));
+
+  phaseObjects.push_back(new AmbienceObject(new LoaderParams(50, 50, 32, 32, "fire")));
+  phaseObjects.push_back(new Crosshair(new LoaderParams(ws.width/2 - (SprDefaultSize/2), ws.height/2 - (SprDefaultSize/2), SprDefaultSize, SprDefaultSize, "crosshair")));
+
 }
 
 
@@ -26,7 +24,7 @@ bool Game::init() {
       return false;
     }
 
-    window = SDL_CreateWindow(windowSettings.projectName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowSettings.width, windowSettings.height, windowSettings.flags);
+    window = SDL_CreateWindow(ws.projectName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ws.width, ws.height, ws.flags);
     if (window == nullptr) {
       std::cerr << "Error creating window" << std::endl;
       return false;
@@ -40,15 +38,11 @@ bool Game::init() {
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-    if (!TextureHandler::Instance()->load("assets/sPlayerAttack.png", "animate", renderer)) {
-      throw std::runtime_error("Error loading texture");
-    }
+    TextureHandler::Instance()->loadTextures(renderer);
+    
+    gsm = new GameStateMachine();
+    gsm->changeState(new MenuState());
 
-    if (!TextureHandler::Instance()->load("assets/fire.png", "fire", renderer)) {
-      throw std::runtime_error("Error loading texture");
-    }
-
-    loadScene();
 
   } catch (const std::exception& e) {
     std::cerr << "Exception: " << e.what() << std::endl;
@@ -61,9 +55,7 @@ bool Game::init() {
 void Game::render() {
   SDL_RenderClear(renderer);
 
-  for(auto& gameObject : gameObjects){
-    gameObject->draw();
-  } 
+  gsm->render(); 
 
   SDL_RenderPresent(renderer);
 }
@@ -73,10 +65,11 @@ bool Game::running() const {
 }
 
 void Game::clean() {
-  for (auto& gameObject : gameObjects) {
+  for (auto& gameObject : phaseObjects) {
     delete gameObject;
   }
 
+  delete gsm;
   SDL_DestroyWindow(window);
   SDL_DestroyRenderer(renderer);
   SDL_Quit();
@@ -89,12 +82,13 @@ void Game::setRunnable(bool runnable) {
 
 void Game::handleEvents() {
   Event::InputHandler::Instance()->update(); 
+
+  if(Event::InputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN))
+     gsm->changeState(new PlayState());
 }
 
 void Game::update() {
-  for(auto& gameObject : gameObjects){
-    gameObject->update();
-  } 
+  gsm->update();
 }
 
 int main() {
@@ -113,8 +107,8 @@ int main() {
 
 
     frameTime = SDL_GetTicks() - frameStart;
-    if(frameTime < Game::Instance()->windowSettings.frameTargetTime) {
-      SDL_Delay((int)(Game::Instance()->windowSettings.frameTargetTime - frameTime));
+    if(frameTime < Game::Instance()->ws.frameTargetTime) {
+      SDL_Delay((int)(Game::Instance()->ws.frameTargetTime - frameTime));
     }
   }
 

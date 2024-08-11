@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "Game.h"
-#include "util/TextureHandler.h"
+#include "TextureHandler.h"
 #include <iostream>
 
 GameObject::GameObject(const LoaderParams* params) : coord(params->getX(), params->getY()), velocity(0,0), acceleration(0, 0) {
