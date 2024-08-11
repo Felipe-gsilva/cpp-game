@@ -66,13 +66,6 @@ private:
 
   u16 currentFrame;
 
-  SDL_Event event;
-
-  Player* player;
-  GameObject* enemy1;
-  GameObject* enemy2;
-  GameObject* enemy3;
-
   std::vector<GameObject*> gameObjects;
 
   static Game* instance;
