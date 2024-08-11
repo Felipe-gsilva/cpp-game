@@ -1,11 +1,7 @@
 #pragma once
 
-#include "TextureHandler.h"
 #include "GameObject.h"
-#include "Player.h"
 
-#include <iostream>
-#include <memory>
 #include <vector>
 
 #include <SDL2/SDL.h>
@@ -24,6 +20,8 @@
 #define i64 int64_t
 
 #define SprDefaultSize 32
+
+using namespace Object;
 
 namespace Application {
 class Game{
@@ -67,8 +65,10 @@ private:
 
   SDL_Event event;
 
-  GameObject gameObj;
-  Player player;
+  GameObject* player;
+  GameObject* enemy1;
+  GameObject* enemy2;
+  GameObject* enemy3;
 
   std::vector<GameObject*> gameObjects;
 };
