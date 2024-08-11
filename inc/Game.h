@@ -73,7 +73,6 @@ private:
   SDL_Rect srcRect;
   SDL_Rect destRect;
 
-  std::vector<GameObject*> phaseObjects;
   States::GameStateMachine* gsm;
   States::MenuState *menu;
   States::PlayState *play;

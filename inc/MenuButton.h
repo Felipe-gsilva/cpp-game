@@ -5,15 +5,19 @@
 #include "Defines.h"
 #include "LoaderParams.h"
 
-using namespace Object;
 
-class MenuButton : public GameObject {
+class MenuButton : public Object::GameObject {
 public:
-  MenuButton(const LoaderParams* params);
+  MenuButton(const LoaderParams* params, void (*callback)());
 
   virtual void draw();
   virtual void update();
   virtual void clean();
+
+  bool released;
+
+  static void menuToPlay();
+  static void exitFromMenu();
 
 private:
   enum button_state
@@ -22,5 +26,7 @@ private:
     MOUSE_OVER = 1,
     CLICKED = 2
   };
+
+  void (*callback)();
 };
 

@@ -10,7 +10,7 @@ namespace States {
 class PlayState : public GameStates {
 public:
   PlayState() {}
-  virtual ~PlayState() {}
+  ~PlayState() {}
 
   void update() override;
   void render() override;
