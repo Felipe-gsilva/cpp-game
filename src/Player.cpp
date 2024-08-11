@@ -1,22 +1,17 @@
 #include "Player.h"
+#include <SDL2/SDL.h>
 
-void Player::load(int x, int y, int width, int height, std::string textureID) {
-  GameObject::load(x, y, width, height, textureID);
-  xSpeed = ySpeed = 1.2;
-}
+Player::Player(const LoaderParams* params) : GameObject(params) { }
 
-
-void Player::draw(SDL_Renderer* renderer) {
-  GameObject::draw(renderer);
+void Player::draw() {
+  GameObject::draw();
 }
 
 void Player::update() {
-  x = ((int)(x + xSpeed) % 1280);
-  y = ((int)(y + ySpeed) % 800);
+  coord.setX(((int)(coord.getX() + xSpeed) % 1280));
+  coord.setY(((int)(coord.getY() + ySpeed) % 800));
   currentFrame = int(((SDL_GetTicks() / 100) % 6));
-
 }
 
 void Player::clean() {
-
 }

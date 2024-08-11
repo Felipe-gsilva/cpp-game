@@ -1,8 +1,6 @@
 #include "Game.h"
-#include "TextureHandler.h"
+#include "util/TextureHandler.h"
 
-#include "Player.h"
-#include "Enemy.h"
 
 #include <iostream>
 #include <memory>
@@ -10,6 +8,13 @@
 using namespace Application;
 using namespace Texture;
 
+
+Game* Game::instance = 0;
+
+void Game::loadScene() {
+  gameObjects.push_back(new Player(new LoaderParams(100, 100, 32, 32, "animate")));
+  gameObjects.push_back(new Enemy(new LoaderParams(200, 200, 32, 32, "animate")));
+}
 bool Game::init() {
   try {
     if (SDL_Init (SDL_INIT_EVERYTHING) < 0)  {
@@ -30,14 +35,7 @@ bool Game::init() {
     if(!TextureHandler::Instance()->load("assets/sPlayerAttack.png", "animate", renderer))
       throw new std::exception();
 
-    player = new Player();
-    player->load(windowSettings.width * 0.5f- (SprDefaultSize * 0.5f), windowSettings.height* 0.5f - (SprDefaultSize * 0.5f), SprDefaultSize, SprDefaultSize, "animate");
-
-    enemy1 = new Enemy();
-    enemy1->load(200, 200, 32, 32, "animate");
-
-    gameObjects.push_back(player);
-    gameObjects.push_back(enemy1);
+    loadScene();
 
   } catch (std::exception ) {
     std::cout << "error" << std::endl;
@@ -50,7 +48,7 @@ void Game::render() {
   SDL_RenderClear(renderer);
 
   for(std::vector<GameObject*>::size_type i = 0; i < gameObjects.size(); i++){
-    gameObjects[i]->draw(renderer);
+    gameObjects[i]->draw();
   } 
 
   SDL_RenderPresent(renderer);
@@ -95,21 +93,20 @@ void Game::update() {
 }
 
 int main() {
-  std::unique_ptr<Game> game = std::make_unique<Game>();
 
-  if(game->init()) {
-    game->setRunnable(true);
+  if(Game::Instance()->init()) {
+    Game::Instance()->setRunnable(true);
   }
 
-  while (game->running()) {
-    game->update();
-    game->handleEvents();
-    game->render();
+  while (Game::Instance()->running()) {
+    Game::Instance()->update();
+    Game::Instance()->handleEvents();
+    Game::Instance()->render();
 
     SDL_Delay(10);
   }
 
-  game->clean();
+  Game::Instance()->clean();
   return 0;
 }
 

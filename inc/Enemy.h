@@ -1,10 +1,8 @@
 #pragma once
 
 #include "GameObject.h" 
-#include "TextureHandler.h"
 
 using namespace Object;
-
 class Enemy : public GameObject {
 public:
 
@@ -13,9 +11,11 @@ private:
   float ySpeed;
 
 public:
-  void load(int x, int y, int width, int height, std::string textureID);
-  void draw(SDL_Renderer *renderer);
-  void update();
-  void clean();
+  Enemy(const LoaderParams* params);
+  ~Enemy() {}
+
+  void draw() override;
+  void update() override;
+  void clean() override;
 };
 

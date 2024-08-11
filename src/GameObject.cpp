@@ -1,23 +1,20 @@
 #include "GameObject.h"
-#include "TextureHandler.h"
+#include "Game.h"
+#include "util/TextureHandler.h"
 
-using namespace Object;
-using namespace Texture;
-
-void GameObject::load(int x, int y, int width, int height, std::string textureId) {
-  this->x = x;
-  this->y = y;
-  this->width = width;
-  this->height = height;
-  this->textureId = textureId;
-
-  currentFrame = 1;
+GameObject::GameObject(const LoaderParams* params) : coord(params->getX(), params->getY()) {
+  width = params->getWidth();
+  height = params->getHeight();
+  textureId = params->getTextureId();
   currentRow = 1;
+  currentFrame = 1;
 }
 
-void GameObject::draw(SDL_Renderer *renderer) {
-  TextureHandler::Instance()->drawFrame(textureId, x, y, width, height, currentRow, currentFrame, renderer, SDL_FLIP_NONE);
+
+void GameObject::draw() {
+  Texture::TextureHandler::Instance()->drawFrame(textureId, coord.getX(), coord.getY(), width, height, currentRow, currentFrame, Application::Game::Instance()->getRenderer());
 }
 
-void GameObject::update() {
-}
+void GameObject::clean() {}
+
+void GameObject::update() {}

@@ -22,7 +22,6 @@ public:
     if(instance == 0)
     {
       instance = new TextureHandler();
-      return instance;
     }
     return instance;
   }
@@ -33,7 +32,5 @@ public:
 
   void drawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-  typedef TextureHandler TheTextureHandler;
 };
-
 }

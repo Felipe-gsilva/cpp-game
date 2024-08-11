@@ -1,24 +1,26 @@
 #pragma once
 
-#include <string>
-#include <SDL2/SDL_render.h>
+#include "util/LoaderParams.h"
+#include "Vector2D.h"
 
 
 namespace Object {
 class GameObject {
 public:
-  void load(int x, int y, int width, int height, std::string textureID);
-  void draw(SDL_Renderer* renderer);
-  void update();
-  void clean();
+  virtual ~GameObject() {}
+
+  virtual void draw();
+  virtual void update();
+  virtual void clean();
 
 protected:
-  std::string textureId;
-  int currentFrame;
-  int currentRow;
-  int x;
-  int y;
+  GameObject(const LoaderParams* params);
+
+  Vector2D coord;
   int width;
   int height;
+  int currentRow;
+  int currentFrame;
+  std::string textureId;
 };
 }
