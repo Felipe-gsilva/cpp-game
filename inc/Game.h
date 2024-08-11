@@ -56,6 +56,7 @@ public:
   SDL_Renderer* getRenderer() const { return renderer; }
   SDL_Window* getWindow() const { return window; }
   States::GameStateMachine *getGameStateMachine() const {return gsm;}
+  States::PlayState *getPlayState() const {return play; }
 
 private:
   Game() {}
@@ -75,6 +76,8 @@ private:
   SDL_Rect destRect;
 
   States::GameStateMachine* gsm;
+  States::PlayState *play;
+  States::MenuState *menu;
   
   static Game* instance;
 

@@ -5,7 +5,6 @@ using namespace Texture;
 using namespace States;
 
 Game* Game::instance = nullptr;
-States::MenuState *menu;
 
 bool Game::init() {
   try {
@@ -31,12 +30,12 @@ bool Game::init() {
     menu = new MenuState();
     gsm->pushState(menu);
 
+    play = new PlayState();
+    gsm->pushState(play);
+
     gsm->changeState(menu);
     std::cout << "menu";
 
-    PlayState *play = new PlayState();
-    gsm->pushState(play);
-    gsm->changeState(play);
 
   } catch (const std::exception& e) {
     std::cerr << "Exception: " << e.what() << std::endl;

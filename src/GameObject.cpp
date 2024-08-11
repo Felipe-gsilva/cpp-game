@@ -10,7 +10,11 @@ GameObject::GameObject(const LoaderParams* params) : rect(Rectangle2D((u16)param
 }
 
 void GameObject::draw() {
-  Texture::TextureHandler::Instance()->drawFrame(textureId, rect.getPos().getX(), rect.getPos().getY(), rect.getWidth(), rect.getHeight(), currentRow, currentFrame, Application::Game::Instance()->getRenderer());
+  Texture::TextureHandler::Instance()->drawFrame(textureId, rect.getPos().getX(), rect.getPos().getY(), rect.getWidth(), rect.getHeight(), currentRow, currentFrame, Application::Game::Instance()->getRenderer(), SDL_FLIP_NONE);
+}
+
+void GameObject::draw(SDL_RendererFlip flip) {
+ Texture::TextureHandler::Instance()->drawFrame(textureId, rect.getPos().getX(), rect.getPos().getY(), rect.getWidth(), rect.getHeight(), currentRow, currentFrame, Application::Game::Instance()->getRenderer(), flip);
 }
 
 bool GameObject::isColliding(GameObject *obj) {
@@ -23,4 +27,3 @@ void GameObject::update() {
   velocity += acceleration;
   rect.setPos(rect.getPos() + velocity);
 }
-

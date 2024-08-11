@@ -3,6 +3,7 @@
 #include "LoaderParams.h"
 #include "Vector2D.h"
 #include "Rectangle2D.h"
+#include "SDL_render.h"
 
 
 namespace Object {
@@ -11,6 +12,7 @@ public:
   virtual ~GameObject() {}
 
   virtual void draw();
+  virtual void draw(SDL_RendererFlip flip);
   virtual void update();
   virtual void clean();
   bool isColliding(GameObject* obj);
@@ -20,6 +22,13 @@ public:
     RIGHT = 1,
     DOWN = 0,
     UP = 1
+  };
+
+  enum frame {
+    IDLE = 1,
+    MOVE = 2,
+    ATTACK = 4,
+    JUMP = 5
   };
 
 protected:

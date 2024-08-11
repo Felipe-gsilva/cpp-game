@@ -60,6 +60,14 @@ public:
       (*this) *= 1 / length();
   }
 
+  friend bool operator != (Vector2D& v1, const Vector2D& v2) {
+    return v1.x != v2.x && v1.y != v2.y;
+  }
+
+  friend bool operator == (Vector2D& v1, const Vector2D& v2) {
+    return v1.x == v2.x && v1.y == v2.y;
+  }
+
 private:
   float x;
   float y;
