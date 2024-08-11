@@ -1,9 +1,9 @@
 #include "Game.h"
 
 using namespace Application;
+using namespace Texture;
 
-
-bool Game::init(){
+bool Game::init() {
   try {
     if (SDL_Init (SDL_INIT_EVERYTHING) < 0)  {
       std::cerr << "error while initializing SDL" << std::endl;
@@ -18,9 +18,10 @@ bool Game::init(){
     if(renderer == 0) 
       std::cerr << "error while creating window" << std::endl;
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
    
-    textureManager.load("assets/sPlayerAttack.png", "animate", renderer);
+     if(!TextureHandler::Instance()->load("assets/sPlayerAttack.png", "animate", renderer))
+      throw new std::exception();
 
   } catch (std::exception ) {
     std::cout << "error" << std::endl;
@@ -32,9 +33,9 @@ bool Game::init(){
 void Game::render() {
   SDL_RenderClear(renderer);
 
-  textureManager.draw("animate", 0, 0, 32, 32, renderer);
+  TextureHandler::Instance()->draw("animate", 0, 0, 32 * 2, 32 * 2, renderer) ;
 
-  textureManager.drawFrame("animate", 100, 100, 32, 32, 1, currentFrame, renderer);
+  TextureHandler::Instance()->drawFrame("animate", windowSettings.width * 0.5f, windowSettings.height * 0.5f, 32, 32, 1, currentFrame, renderer);
 
   SDL_RenderPresent(renderer);
 }
@@ -66,7 +67,7 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-  currentFrame = SprDefaultSize * int(((SDL_GetTicks() / 100) % 6));
+  currentFrame =  int(((SDL_GetTicks() / 100) % 6));
 }
 
 int main() {
