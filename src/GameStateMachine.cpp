@@ -3,6 +3,7 @@
 using  namespace States;
 void GameStateMachine::update() {
   if(!gameStates.empty()) {
+    gameStates.back()->getStateId();
     gameStates.back()->update();
   }
 }
@@ -15,24 +16,14 @@ void GameStateMachine::render() {
 void GameStateMachine::pushState(GameStates *state) {
   gameStates.push_back(state);
   gameStates.back()->onEnter();
-
 }
+
 void GameStateMachine::changeState(GameStates *state) {
   if(!gameStates.empty())
   {
-    if(gameStates.back()->onExit())
+    if(gameStates.back()->getStateId() == state->getStateId())
     {
-      delete gameStates.back();
-      gameStates.pop_back();
-    }
-  }
-}
-void GameStateMachine::popState(GameStates *state) {
-  if(!gameStates.empty())
-  {
-    if(gameStates.back()->getStateID() == state->getStateID())
-    {
-      return; // do nothing
+      return; 
     }
     if(gameStates.back()->onExit())
     {
@@ -43,3 +34,16 @@ void GameStateMachine::popState(GameStates *state) {
     gameStates.back()->onEnter();
   }
 }
+
+void GameStateMachine::popState(GameStates *state) {
+  if(!gameStates.empty())
+  {
+    if(gameStates.back()->onExit())
+    {
+      delete gameStates.back();
+      gameStates.pop_back();
+    }
+  }
+}
+
+

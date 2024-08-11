@@ -2,47 +2,39 @@
 
 using namespace Application;
 using namespace Texture;
-
+using namespace States;
 
 Game* Game::instance = nullptr;
 
-void Game::loadScene() {
-  phaseObjects.push_back(new Player(new LoaderParams(ws.width/2 - (SprDefaultSize/2), ws.height/2 - (SprDefaultSize/2), SprDefaultSize, SprDefaultSize, "animate")));
-
-  phaseObjects.push_back(new Enemy(new LoaderParams(ws.width * 0.2f, ws.height * 0.2f, SprDefaultSize, SprDefaultSize, "animate")));
-
-  phaseObjects.push_back(new AmbienceObject(new LoaderParams(50, 50, 32, 32, "fire")));
-  phaseObjects.push_back(new Crosshair(new LoaderParams(ws.width/2 - (SprDefaultSize/2), ws.height/2 - (SprDefaultSize/2), SprDefaultSize, SprDefaultSize, "crosshair")));
-
-}
-
-
 bool Game::init() {
   try {
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-      std::cerr << "Error initializing SDL" << std::endl;
-      return false;
-    }
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
+      throw new std::runtime_error("Error initializing SDL");
+    
 
     window = SDL_CreateWindow(ws.projectName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ws.width, ws.height, ws.flags);
-    if (window == nullptr) {
-      std::cerr << "Error creating window" << std::endl;
-      return false;
-    }
+    if (window == nullptr) 
+      throw new std::runtime_error("Error creating window");
+    
 
     renderer = SDL_CreateRenderer(window, -1, 0);
-    if (renderer == nullptr) {
-      std::cerr << "Error creating renderer" << std::endl;
-      return false;
-    }
+    if (renderer == nullptr) 
+      throw new std::runtime_error("Error creating renderer");
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     TextureHandler::Instance()->loadTextures(renderer);
     
     gsm = new GameStateMachine();
-    gsm->changeState(new MenuState());
 
+    menu = new MenuState();
+    gsm->pushState(menu);
+
+    play = new PlayState();
+    gsm->pushState(play); 
+
+    gsm->changeState(menu);
+    std::cout << "menu";
 
   } catch (const std::exception& e) {
     std::cerr << "Exception: " << e.what() << std::endl;
@@ -69,6 +61,11 @@ void Game::clean() {
     delete gameObject;
   }
 
+  gsm->popState(menu);
+  gsm->popState(play);
+
+  delete play;
+  delete menu;
   delete gsm;
   SDL_DestroyWindow(window);
   SDL_DestroyRenderer(renderer);
@@ -94,9 +91,8 @@ void Game::update() {
 int main() {
   u32 frameStart, frameTime;
 
-  if(Game::Instance()->init()) {
+  if(Game::Instance()->init()) 
     Game::Instance()->setRunnable(true);
-  }
 
   while (Game::Instance()->running()) {
     frameStart = SDL_GetTicks();
@@ -105,8 +101,11 @@ int main() {
     Game::Instance()->update();
     Game::Instance()->render();
 
-
     frameTime = SDL_GetTicks() - frameStart;
+    std::string title;
+    title = std::to_string(frameTime);
+    SDL_SetWindowTitle(Game::Instance()->getWindow(), title.c_str());
+      
     if(frameTime < Game::Instance()->ws.frameTargetTime) {
       SDL_Delay((int)(Game::Instance()->ws.frameTargetTime - frameTime));
     }

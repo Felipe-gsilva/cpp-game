@@ -9,7 +9,7 @@
 namespace Event {
 class InputHandler{
 public:
-  enum mouse_buttons
+  enum mouseButtons
   {
     LEFT = 0,
     MIDDLE = 1,
