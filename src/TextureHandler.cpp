@@ -19,6 +19,7 @@ bool TextureHandler::load(std::string fileName, std::string id, SDL_Renderer* re
   if(texture == 0){
     return false;
   }
+
   textureMap[id] = texture;
   return true;
 }
@@ -47,7 +48,3 @@ void TextureHandler::drawFrame(std::string id, int x, int y, int width, int heig
   destRect.y = y;
   SDL_RenderCopyEx(renderer, textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
-
-
-
-

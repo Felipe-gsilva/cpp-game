@@ -1,9 +1,12 @@
 #pragma once
 
 #include "TextureHandler.h"
+#include "GameObject.h"
+#include "Player.h"
 
 #include <iostream>
 #include <memory>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -31,7 +34,7 @@ public:
   int main();
   void update();
   bool init();
-  bool runnable();
+  bool running();
   void render();
   void clean();
   void setRunnable(bool runnable);
@@ -50,6 +53,8 @@ public:
     u16 frameTargetTime = (1000/fps);
   };
 
+  const WindowSettings windowSettings;
+
 private:
   SDL_Window *window;
   SDL_Renderer *renderer;
@@ -61,6 +66,10 @@ private:
   u16 currentFrame;
 
   SDL_Event event;
-  const WindowSettings windowSettings;
+
+  GameObject gameObj;
+  Player player;
+
+  std::vector<GameObject*> gameObjects;
 };
 }
