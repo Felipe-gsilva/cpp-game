@@ -23,7 +23,7 @@ public:
   int main();
   void update();
   bool init();
-  bool running();
+  bool running() const;
   void render();
   void clean();
   void setRunnable(bool runnable);
