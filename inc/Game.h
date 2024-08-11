@@ -3,12 +3,16 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_surface.h>
 
 #define u8 Uint8
 #define u16 Uint16
 #define u32 Uint32
 #define u64 Uint64
-
+#define i8 int8_t
+#define i16 int16_t
+#define i32 int32_t
+#define i64 int64_t
 
 namespace Application {
 class Game{
@@ -24,13 +28,12 @@ public:
   void clean();
   void setRunnable(bool runnable);
   void handleEvents(); 
-
 private:
 
 public:
   bool Running = false;
 
- struct WindowSettings {
+  struct WindowSettings {
     const char* projectName = "cpp-game"; 
     u16 width = 1280; 
     u16 height = 800;
@@ -42,6 +45,12 @@ public:
 private:
   SDL_Window *window;
   SDL_Renderer *renderer;
+  SDL_Surface *surface;
+
+  SDL_Texture *texture;
+  SDL_Rect srcRect;
+  SDL_Rect destRect;
+
   SDL_Event event;
   const WindowSettings windowSettings;
 };

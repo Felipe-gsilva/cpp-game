@@ -12,6 +12,19 @@ bool Game::init(){
       renderer = SDL_CreateRenderer(window, -1, 0);
       if(renderer != 0) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        surface = SDL_LoadBMP("assets/dots.bmp");
+
+        texture = SDL_CreateTextureFromSurface(renderer,surface);
+
+        SDL_FreeSurface(surface);
+
+        SDL_QueryTexture(texture, nullptr, nullptr, &srcRect.w, &srcRect.h);
+
+        destRect.w = 200;
+        destRect.h = 200;
+        destRect.x = windowSettings.width * 0.5f - (destRect.w * 0.5f);
+        destRect.y = windowSettings.height * 0.5f - (destRect.h * 0.5f);
+
       }
     }
   } else {
@@ -22,6 +35,8 @@ bool Game::init(){
 
 void Game::render() {
   SDL_RenderClear(renderer);
+  SDL_RenderCopy(renderer, texture, &srcRect, &destRect);
+  //SDL_RenderCopy(renderer, texture, 0, 0);
   SDL_RenderPresent(renderer);
 }
 
@@ -44,13 +59,14 @@ void Game::handleEvents() {
     switch(event.type) {
       case SDL_QUIT:
         setRunnable(false);
-      break;
+        break;
 
       defaut:
         break;
     }
   }
 }
+
 void Game::update() {}
 
 int main() {
