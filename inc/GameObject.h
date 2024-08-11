@@ -13,8 +13,8 @@ public:
   virtual void update();
   virtual void clean();
 
-protected:
   GameObject(const LoaderParams* params);
+protected:
 
   Vector2D coord;
   int width;
