@@ -13,9 +13,9 @@ void Crosshair::draw() {
 void Crosshair::update() {
   currentFrame = int(((SDL_GetTicks() / 300) % 2));
   Vector2D* mousePos = Event::InputHandler::Instance()->getMousePosition();
-  velocity = (*mousePos - coord) / 5;
-  coord += velocity;
-  coord -= Vector2D(SprDefaultSize*0.1f, SprDefaultSize*0.1f);
+  velocity = (*mousePos - rect.getPos()) / 5;
+  rect.setPos(rect.getPos() +velocity);
+  rect.setPos(rect.getPos() - Vector2D(SprDefaultSize*0.1f, SprDefaultSize*0.1f));
 }
 
 void Crosshair::clean() {

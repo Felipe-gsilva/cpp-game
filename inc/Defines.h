@@ -1,9 +1,10 @@
 #include <iostream>
+#include <cstdint>
 
-#define u8 Uint8
-#define u16 Uint16
-#define u32 Uint32
-#define u64 Uint64
+#define u8 uint8_t
+#define u16 uint16_t
+#define u32 uint32_t
+#define u64 uint64_t
 
 #define i8 int8_t
 #define i16 int16_t

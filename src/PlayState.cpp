@@ -1,4 +1,4 @@
-#include "PlayState.h"
+#include "States/PlayState.h"
 #include "Game.h"
 
 using namespace States;
@@ -8,13 +8,20 @@ const std::string PlayState::playId = "PLAY";
 
 void PlayState::update()
 {
-  for(auto& gameObject : gameObjects) 
-    gameObject->update();
+  for(auto& gameObject : gameObjects) {
+    for(auto& test: gameObjects) {
+      if(gameObject->isColliding(test)) {
+        std::cout << "carlinhos";
+      }
+    }
+    gameObject->update(); 
+  }
 }
+
 void PlayState::render()
 {
   for(auto& gameObject : gameObjects) 
-    gameObject->draw();
+  gameObject->draw();
 }
 
 bool PlayState::onEnter()

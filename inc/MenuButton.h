@@ -6,6 +6,7 @@
 #include "LoaderParams.h"
 
 
+
 class MenuButton : public Object::GameObject {
 public:
   MenuButton(const LoaderParams* params, void (*callback)());

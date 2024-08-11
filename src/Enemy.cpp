@@ -8,8 +8,8 @@ void Enemy::draw() {
 }
 
 void Enemy::update() {
-  coord.setX(((int)(coord.getX() + xSpeed) % 1280));
-  coord.setY(((int)(coord.getY() + ySpeed) % 800));
+  rect.getPos().setX(((int)(rect.getPos().getX() + xSpeed) % 1280));
+  rect.getPos().setY(((int)(rect.getPos().getY() + ySpeed) % 800));
 }
 
 void Enemy::clean() {

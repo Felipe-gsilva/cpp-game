@@ -2,6 +2,7 @@
 
 #include "LoaderParams.h"
 #include "Vector2D.h"
+#include "Rectangle2D.h"
 
 
 namespace Object {
@@ -12,16 +13,22 @@ public:
   virtual void draw();
   virtual void update();
   virtual void clean();
+  bool isColliding(GameObject* obj);
+
+  enum facing {
+    LEFT = 0,
+    RIGHT = 1,
+    DOWN = 0,
+    UP = 1
+  };
 
 protected:
   GameObject(const LoaderParams* params);
 
-  Vector2D coord;
   Vector2D velocity;
   Vector2D acceleration;
-
-  int width;
-  int height;
+  Rectangle2D rect;
+  Vector2D direction;
 
   int currentRow;
   int currentFrame;
